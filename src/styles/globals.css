@@ -20,3 +20,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* 
+  参考 https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+  src/pages/_app.tsxで呼び出しているのでアプリ全体で利用可能
+ */
+:root {
+  --text-purple: rgba(67, 56, 202, 1);
+  --text-purple-dark: rgba(79, 70, 229, 1);
+  --text-black: rgba(17, 24, 39, 1);
+  --text-white-100: rgba(229, 231, 235, 1);
+}
