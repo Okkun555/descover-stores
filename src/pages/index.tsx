@@ -1,4 +1,5 @@
 import Banner from "@/components/Banner/Banner";
+import Card from "@/components/Card/Card";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
@@ -16,6 +17,12 @@ export default function Home() {
         <Banner
           buttonText="View stores nearby"
           handleOnClick={handleOnBannerBtnClick}
+        />
+
+        <Card
+          href="/static/store/bar-doz"
+          imgUrl="/hero-image.png"
+          name="Bar Doz"
         />
       </main>
     </div>
