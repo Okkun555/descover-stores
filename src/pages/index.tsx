@@ -3,6 +3,8 @@ import Card from "@/components/Card/Card";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
+import stores from "../../data/stores.json";
+
 export default function Home() {
   const handleOnBannerBtnClick = () => console.log("banner btn click");
 
@@ -20,16 +22,14 @@ export default function Home() {
         />
 
         <div className={styles.cardLayout}>
-          <Card
-            href="/static/store/bar-doz"
-            imgUrl="/hero-image.png"
-            name="Bar Doz"
-          />
-          <Card
-            href="/static/store/bar-doz"
-            imgUrl="/hero-image.png"
-            name="Bar Doz"
-          />
+          {stores.map((store) => (
+            <Card
+              key={store.id}
+              name={store.name}
+              imgUrl={store.imgUrl}
+              href={`/store/${store.id}`}
+            />
+          ))}
         </div>
       </main>
     </div>

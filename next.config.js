@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-}
 
-module.exports = nextConfig
+  // NOTE: https://nextjs.org/docs/messages/next-image-unconfigured-host
+  images: {
+    domains: ["images.unsplash.com"],
+  },
+};
+
+module.exports = nextConfig;
