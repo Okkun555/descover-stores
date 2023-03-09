@@ -19,11 +19,18 @@ export default function Home() {
           handleOnClick={handleOnBannerBtnClick}
         />
 
-        <Card
-          href="/static/store/bar-doz"
-          imgUrl="/hero-image.png"
-          name="Bar Doz"
-        />
+        <div className={styles.cardLayout}>
+          <Card
+            href="/static/store/bar-doz"
+            imgUrl="/hero-image.png"
+            name="Bar Doz"
+          />
+          <Card
+            href="/static/store/bar-doz"
+            imgUrl="/hero-image.png"
+            name="Bar Doz"
+          />
+        </div>
       </main>
     </div>
   );
