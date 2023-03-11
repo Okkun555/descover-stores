@@ -4,8 +4,29 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 import stores from "../../data/stores.json";
+import { GetStaticProps } from "next";
+import React from "react";
 
-export default function Home() {
+type HomeProps = {
+  id: number;
+  name: string;
+  imgUrl: string;
+  websiteUrl: string;
+  address: string;
+  neighbourhood: string;
+}[];
+
+export const getStaticProps: GetStaticProps = async () => {
+  // NOTE: サーバーサイド側にログが測れる（クライアントサイドには出ない）
+  // console.log("getStaticProps");
+
+  return {
+    props: { stores },
+  };
+};
+
+export const Home: React.FC<HomeProps> = (props) => {
+  console.log("props", props);
   const handleOnBannerBtnClick = () => console.log("banner btn click");
 
   return (
@@ -34,4 +55,6 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export default Home;
