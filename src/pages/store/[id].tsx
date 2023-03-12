@@ -1,5 +1,6 @@
 import { Store } from "@/types/store";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -22,31 +23,41 @@ export const getStaticProps: GetStaticProps = (
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
+  const paths = storesData.map((store) => {
+    return {
+      params: {
+        id: store.id.toString(),
+      },
+    };
+  });
+
   return {
-    paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
+    paths,
     // fallback: false, // NOTE: 該当しないidの場合Nextで用意されている404を表示
     fallback: true,
   };
 };
 
 const Store: React.FC<StoreProps> = (props) => {
-  const { store } = props;
+  const { address, name, neighbourhood } = props.store;
 
   const router = useRouter();
-  const { id } = router.query;
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
   return (
-    <>
-      <div>Bar Page {id}</div>
+    <div>
+      <Head>
+        <title>{name}</title>
+      </Head>
       <Link href="/">Back to home</Link>
       <Link href="/store/1111">Go to page dynamic</Link>
-      <p>{store.address}</p>
-      <p>{store.name}</p>
-    </>
+      <p>{address}</p>
+      <p>{name}</p>
+      <p>{neighbourhood}</p>
+    </div>
   );
 };
 
