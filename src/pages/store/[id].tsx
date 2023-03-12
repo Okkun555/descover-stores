@@ -24,7 +24,8 @@ export const getStaticProps: GetStaticProps = (
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
-    fallback: false,
+    // fallback: false, // NOTE: 該当しないidの場合Nextで用意されている404を表示
+    fallback: true,
   };
 };
 
@@ -33,6 +34,10 @@ const Store: React.FC<StoreProps> = (props) => {
 
   const router = useRouter();
   const { id } = router.query;
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
