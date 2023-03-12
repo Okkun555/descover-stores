@@ -1,24 +1,19 @@
-import Banner from "@/components/Banner/Banner";
-import Card from "@/components/Card/Card";
+import React from "react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
+import Banner from "@/components/Banner/Banner";
+import Card from "@/components/Card/Card";
+
+import { Store } from "@/types/store";
 import storesData from "../../data/stores.json";
-import { GetStaticProps } from "next";
-import React from "react";
 
 type HomeProps = {
-  stores: {
-    id: number;
-    name: string;
-    imgUrl: string;
-    websiteUrl: string;
-    address: string;
-    neighbourhood: string;
-  }[];
+  stores: Store[];
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   // NOTE: サーバーサイド側にログが測れる（クライアントサイドには出ない）
   // console.log("getStaticProps");
 
