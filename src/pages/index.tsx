@@ -3,30 +3,32 @@ import Card from "@/components/Card/Card";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-import stores from "../../data/stores.json";
+import storesData from "../../data/stores.json";
 import { GetStaticProps } from "next";
 import React from "react";
 
 type HomeProps = {
-  id: number;
-  name: string;
-  imgUrl: string;
-  websiteUrl: string;
-  address: string;
-  neighbourhood: string;
-}[];
+  stores: {
+    id: number;
+    name: string;
+    imgUrl: string;
+    websiteUrl: string;
+    address: string;
+    neighbourhood: string;
+  }[];
+};
 
 export const getStaticProps: GetStaticProps = async () => {
   // NOTE: サーバーサイド側にログが測れる（クライアントサイドには出ない）
   // console.log("getStaticProps");
 
   return {
-    props: { stores },
+    props: { stores: storesData },
   };
 };
 
 export const Home: React.FC<HomeProps> = (props) => {
-  console.log("props", props);
+  const { stores } = props;
   const handleOnBannerBtnClick = () => console.log("banner btn click");
 
   return (
@@ -42,16 +44,21 @@ export const Home: React.FC<HomeProps> = (props) => {
           handleOnClick={handleOnBannerBtnClick}
         />
 
-        <div className={styles.cardLayout}>
-          {stores.map((store) => (
-            <Card
-              key={store.id}
-              name={store.name}
-              imgUrl={store.imgUrl}
-              href={`/store/${store.id}`}
-            />
-          ))}
-        </div>
+        {props.stores.length > 0 && (
+          <>
+            <h2 className={styles.sectionHeading}>Favorite Store</h2>
+            <div className={styles.cardLayout}>
+              {props.stores.map((store) => (
+                <Card
+                  key={store.id}
+                  name={store.name}
+                  imgUrl={store.imgUrl}
+                  href={`/store/${store.id}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
