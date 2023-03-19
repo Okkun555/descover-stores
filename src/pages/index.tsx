@@ -17,8 +17,23 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   // NOTE: サーバーサイド側にログが測れる（クライアントサイドには出ない）
   // console.log("getStaticProps");
 
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: process.env.FOURSQUARE_API_KEY!,
+    },
+  };
+
+  const response = await fetch(
+    "https://api.foursquare.com/v3/places/search?query=bar&limit=6",
+    options
+  );
+
+  const data = await response.json();
+
   return {
-    props: { stores: storesData },
+    props: { stores: data.results },
   };
 };
 
@@ -45,10 +60,13 @@ export const Home: React.FC<HomeProps> = (props) => {
             <div className={styles.cardLayout}>
               {props.stores.map((store) => (
                 <Card
-                  key={store.id}
+                  key={store.fsq_id}
                   name={store.name}
-                  imgUrl={store.imgUrl}
-                  href={`/store/${store.id}`}
+                  imgUrl={
+                    store.imgUrl ||
+                    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                  }
+                  href={`/store/${store.fsq_id}`}
                 />
               ))}
             </div>

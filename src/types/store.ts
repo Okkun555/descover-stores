@@ -1,5 +1,5 @@
 export type Store = {
-  id: number;
+  fsq_id: number;
   name: string;
   imgUrl: string;
   websiteUrl: string;
