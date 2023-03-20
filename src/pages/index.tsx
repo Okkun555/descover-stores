@@ -8,6 +8,7 @@ import Card from "@/components/Card/Card";
 
 import { Store } from "@/types/store";
 import storesData from "../../data/stores.json";
+import { fetchStores } from "../../lib/stores";
 
 type HomeProps = {
   stores: Store[];
@@ -17,23 +18,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   // NOTE: サーバーサイド側にログが測れる（クライアントサイドには出ない）
   // console.log("getStaticProps");
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: process.env.FOURSQUARE_API_KEY!,
-    },
-  };
-
-  const response = await fetch(
-    "https://api.foursquare.com/v3/places/search?query=bar&limit=6",
-    options
-  );
-
-  const data = await response.json();
+  const stores = await fetchStores();
 
   return {
-    props: { stores: data.results },
+    props: { stores },
   };
 };
 
