@@ -5,31 +5,33 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import storesData from "../../../data/stores.json";
 import Image from "next/image";
 import cls from "classnames";
+import { fetchStores } from "../../../lib/stores";
 
 type StoreProps = {
   store: Store;
 };
 
-export const getStaticProps: GetStaticProps = (
+export const getStaticProps: GetStaticProps = async (
   staticProps: GetStaticPropsContext
 ) => {
   const params = staticProps.params;
+  const stores = await fetchStores();
 
   return {
     props: {
-      store: storesData.find((store) => store.id === Number(params!.id)),
+      store: stores.find((store) => store.fsq_id === params!.id),
     },
   };
 };
 
-export const getStaticPaths: GetStaticPaths = () => {
-  const paths = storesData.map((store) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const stores = await fetchStores();
+  const paths = stores.map((store) => {
     return {
       params: {
-        id: store.id.toString(),
+        id: store.fsq_id.toString(),
       },
     };
   });
@@ -66,7 +68,10 @@ const Store: React.FC<StoreProps> = (props) => {
             <h1 className={styles.name}>{name}</h1>
           </div>
           <Image
-            src={imgUrl}
+            src={
+              imgUrl ||
+              "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+            }
             width={600}
             height={360}
             className={styles.storeImg}

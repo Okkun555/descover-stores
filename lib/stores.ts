@@ -1,8 +1,10 @@
+import { Store } from "@/types/store";
+
 const getUrlForStores = (query: string, limit: number) => {
   return `https://api.foursquare.com/v3/places/search?query=${query}&limit=${limit}`;
 };
 
-export const fetchStores = async () => {
+export const fetchStores = async (): Promise<Store[]> => {
   const options = {
     method: "GET",
     headers: {
