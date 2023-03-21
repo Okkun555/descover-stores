@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async (
 
   return {
     props: {
-      store: stores.find((store) => store.fsq_id === params!.id),
+      store: stores.find((store) => store.id === params!.id),
     },
   };
 };
@@ -31,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = stores.map((store) => {
     return {
       params: {
-        id: store.fsq_id.toString(),
+        id: store.id.toString(),
       },
     };
   });
@@ -80,24 +80,28 @@ const Store: React.FC<StoreProps> = (props) => {
         </div>
 
         <div className={cls("glass", styles.col2)}>
-          <div className={styles.iconWrapper}>
-            <Image
-              src="/static/icons/places.svg"
-              width="24"
-              height="24"
-              alt="places icon"
-            />
-            <p className={styles.text}>{location.address}</p>
-          </div>
-          <div className={styles.iconWrapper}>
-            <Image
-              src="/static/icons/nearMe.svg"
-              width="24"
-              height="24"
-              alt="nearMe icon"
-            />
-            <p className={styles.text}>{location.region}</p>
-          </div>
+          {location.address && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/places.svg"
+                width="24"
+                height="24"
+                alt="places icon"
+              />
+              <p className={styles.text}>{location.address}</p>
+            </div>
+          )}
+          {location.region && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/nearMe.svg"
+                width="24"
+                height="24"
+                alt="nearMe icon"
+              />
+              <p className={styles.text}>{location.region}</p>
+            </div>
+          )}
           <div className={styles.iconWrapper}>
             <Image
               src="/static/icons/star.svg"

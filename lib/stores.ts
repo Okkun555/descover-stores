@@ -11,10 +11,9 @@ const getUrlForStores = (query: string, limit: number) => {
 
 const getListOfStoresPhotos = async () => {
   const photos = await unsplash.search.getPhotos({
-    query: "bar",
+    query: "Bar",
     page: 1,
     perPage: 30,
-    color: "green",
     orientation: "portrait",
   });
 
@@ -40,6 +39,7 @@ export const fetchStores = async (): Promise<Store[]> => {
   const data = await response.json();
   return data.results.map((result: any, index: number) => {
     return {
+      id: result.fsq_id,
       name: result.name,
       location: {
         address: result.location.address,
