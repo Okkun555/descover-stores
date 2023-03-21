@@ -44,7 +44,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const Store: React.FC<StoreProps> = (props) => {
-  const { address, name, neighbourhood, imgUrl } = props.store;
+  const { name, imgUrl, location } = props.store;
 
   const router = useRouter();
 
@@ -87,7 +87,7 @@ const Store: React.FC<StoreProps> = (props) => {
               height="24"
               alt="places icon"
             />
-            <p className={styles.text}>{address}</p>
+            <p className={styles.text}>{location.address}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image
@@ -96,7 +96,7 @@ const Store: React.FC<StoreProps> = (props) => {
               height="24"
               alt="nearMe icon"
             />
-            <p className={styles.text}>{neighbourhood}</p>
+            <p className={styles.text}>{location.region}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image

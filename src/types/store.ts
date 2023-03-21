@@ -3,6 +3,8 @@ export type Store = {
   name: string;
   imgUrl: string;
   websiteUrl: string;
-  address: string;
-  neighbourhood: string;
+  location: {
+    address: string;
+    region: string;
+  };
 };
