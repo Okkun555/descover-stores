@@ -25,7 +25,9 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 };
 
 export const Home: React.FC<HomeProps> = (props) => {
-  const handleOnBannerBtnClick = () => console.log("banner btn click");
+  const handleOnBannerBtnClick = () => {
+    console.log("banner btn click");
+  };
 
   return (
     <div className={styles.container}>
