@@ -8,6 +8,7 @@ import Card from "@/components/Card/Card";
 
 import { Store } from "@/types/store";
 import { fetchStores } from "../lib/stores";
+import useTrackLocation from "@/hooks/use-track-location";
 
 type HomeProps = {
   stores: Store[];
@@ -25,8 +26,14 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 };
 
 export const Home: React.FC<HomeProps> = (props) => {
+  const { handleTrackLocation, latLong, locationErrorMessage } =
+    useTrackLocation();
+
+  console.log({ latLong, locationErrorMessage });
+
   const handleOnBannerBtnClick = () => {
     console.log("banner btn click");
+    handleTrackLocation();
   };
 
   return (
@@ -41,9 +48,10 @@ export const Home: React.FC<HomeProps> = (props) => {
           buttonText="View stores nearby"
           handleOnClick={handleOnBannerBtnClick}
         />
+        {locationErrorMessage && <p>問題：{locationErrorMessage}</p>}
 
         {props.stores.length > 0 && (
-          <>
+          <div className={styles.sectionWrapper}>
             <h2 className={styles.sectionHeading}>Favorite Store</h2>
             <div className={styles.cardLayout}>
               {props.stores.map((store) => (
@@ -58,7 +66,7 @@ export const Home: React.FC<HomeProps> = (props) => {
                 />
               ))}
             </div>
-          </>
+          </div>
         )}
       </main>
     </div>
