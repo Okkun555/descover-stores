@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Image from "next/image";
 import cls from "classnames";
-import { fetchStores } from "../../../lib/stores";
+import { fetchStores } from "../../lib/stores";
 
 type StoreProps = {
   store: Store;

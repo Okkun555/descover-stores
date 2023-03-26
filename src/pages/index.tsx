@@ -7,8 +7,7 @@ import Banner from "@/components/Banner/Banner";
 import Card from "@/components/Card/Card";
 
 import { Store } from "@/types/store";
-import storesData from "../../data/stores.json";
-import { fetchStores } from "../../lib/stores";
+import { fetchStores } from "../lib/stores";
 
 type HomeProps = {
   stores: Store[];
