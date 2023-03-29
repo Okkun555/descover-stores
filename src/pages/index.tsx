@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -29,12 +29,25 @@ export const Home: React.FC<HomeProps> = (props) => {
   const { handleTrackLocation, latLong, locationErrorMessage } =
     useTrackLocation();
 
-  console.log({ latLong, locationErrorMessage });
-
   const handleOnBannerBtnClick = () => {
-    console.log("banner btn click");
     handleTrackLocation();
   };
+
+  useEffect(() => {
+    async function setStoresByLocation() {
+      if (latLong) {
+        try {
+          const fetchedStores = await fetchStores(latLong);
+
+          console.log(fetchedStores);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
+    setStoresByLocation();
+  }, [latLong]);
 
   return (
     <div className={styles.container}>

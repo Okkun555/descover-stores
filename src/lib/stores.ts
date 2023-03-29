@@ -2,11 +2,11 @@ import { Store } from "@/types/store";
 import { createApi } from "unsplash-js";
 
 const unsplash = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY!,
+  accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!,
 });
 
-const getUrlForStores = (query: string, limit: number) => {
-  return `https://api.foursquare.com/v3/places/search?query=${query}&limit=${limit}`;
+const getUrlForStores = (latLong: string, query: string, limit: number) => {
+  return `https://api.foursquare.com/v3/places/search?query=${query}&ll=${latLong}&limit=${limit}`;
 };
 
 const getListOfStoresPhotos = async () => {
@@ -23,18 +23,21 @@ const getListOfStoresPhotos = async () => {
   return unsplashResults.map((result) => result.urls.small);
 };
 
-export const fetchStores = async (): Promise<Store[]> => {
+export const fetchStores = async (
+  latLong = "43.653833032607096%2C-79.37896808855945",
+  limit = 6
+): Promise<Store[]> => {
   const photos = await getListOfStoresPhotos();
 
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: process.env.FOURSQUARE_API_KEY!,
+      Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY!,
     },
   };
 
-  const response = await fetch(getUrlForStores("bar", 6), options);
+  const response = await fetch(getUrlForStores(latLong, "bar", limit), options);
 
   const data = await response.json();
   return data.results.map((result: any, index: number) => {
