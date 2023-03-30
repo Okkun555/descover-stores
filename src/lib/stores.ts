@@ -10,17 +10,23 @@ const getUrlForStores = (latLong: string, query: string, limit: number) => {
 };
 
 const getListOfStoresPhotos = async () => {
-  const photos = await unsplash.search.getPhotos({
-    query: "Bar",
-    page: 1,
-    perPage: 30,
-    orientation: "portrait",
-  });
+  try {
+    const photos = await unsplash.search.getPhotos({
+      query: "Bar",
+      page: 1,
+      perPage: 30,
+      orientation: "portrait",
+    });
 
-  // TODO: アクセス失敗時のエラーハンドンリング
-  const unsplashResults = photos.response!.results;
+    const unsplashResults = photos.response!.results;
 
-  return unsplashResults.map((result) => result.urls.small);
+    return unsplashResults.map((result) => result.urls.small);
+  } catch (e: unknown) {
+    // TODO: 失敗時の処理は後で検討
+    if (e instanceof Error) {
+      console.error(e);
+    }
+  }
 };
 
 export const fetchStores = async (
